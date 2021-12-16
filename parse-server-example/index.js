@@ -3,6 +3,7 @@
 
 const express = require('express');
 const ParseServer = require('parse-server').ParseServer;
+const ParseDashboard = require('parse-dashboard');
 const path = require('path');
 const args = process.argv || [];
 const test = args.some(arg => arg.includes('jasmine'));
@@ -24,6 +25,24 @@ const config = {
     classNames: ['Posts', 'Comments'], // List of classes to support for query subscriptions
   },
 };
+
+const dashboard = new ParseDashboard({
+  apps: [
+    {
+      serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',
+      appId: process.env.APP_ID || '',
+      masterKey: process.env.MASTER_KEY || '',
+      appName: process.env.APP_NAME || '',
+    },
+  ],
+  users: [
+    {
+      user: process.env.APP_USER,
+      pass: process.env.APP_PASS,
+    },
+  ],
+});
+
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
@@ -32,6 +51,9 @@ const app = express();
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
+
+// make the Parse Dashboard available at /dashboard
+app.use('/dashboard', dashboard);
 
 // Serve the Parse API on the /parse URL prefix
 const mountPath = process.env.PARSE_MOUNT || '/parse';

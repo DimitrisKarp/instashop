@@ -13,6 +13,7 @@
     "express": "4.17.1",
     "kerberos": "1.1.4",
     "parse": "2.19.0",
+    "parse-dashboard": "^3.2.1",
     "parse-server": "4.5.0"
   },
   "scripts": {
