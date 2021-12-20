@@ -1,0 +1,40 @@
+<ng-container *ngIf="landmark">
+  <div class="card shadow-sm p-2">
+    <div class="row">
+      <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
+        <img
+          class="card-img"
+          [src]="landmark?.photo_thumb?.url()"
+          [alt]="landmark?.title"
+          onerror="this.src = 'assets/placeholder.png'"
+        />
+      </div>
+      <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7">
+        <div class="card-body">
+          <h3 class="card-title">
+            {{ landmark?.title }}
+          </h3>
+          <p class="card-text">
+            {{ landmark?.short_info }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="card shadow-sm mt-3"
+    *ngIf="landmark?.url || landmark?.description"
+  >
+    <div class="card-body">
+      <p class="card-text" *ngIf="landmark?.url">
+        <i class="bi bi-globe mr-1"></i>
+        <a [href]="landmark?.url" rel="noreferrer" target="_blank">{{
+          landmark?.url
+        }}</a>
+      </p>
+      <p class="card-text">
+        {{ landmark?.description }}
+      </p>
+    </div>
+  </div>
+</ng-container>
