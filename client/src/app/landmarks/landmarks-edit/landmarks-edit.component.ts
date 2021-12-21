@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-landmarks-edit',
@@ -16,8 +15,7 @@ export class LandmarksEditComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private toastService: ToastService
+    private fb: FormBuilder
   ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
@@ -28,11 +26,16 @@ export class LandmarksEditComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.apiService
+    await this.getLandmark();
+  }
+
+  async getLandmark() {
+    await this.apiService
       .getLandmark(this.route.snapshot.paramMap.get('id'))
       .then((landmark: any) => {
         this.landmark = {
           id: landmark.id,
+          photo: landmark.get('photo'),
           photo_thumb: landmark.get('photo_thumb'),
           title: landmark.get('title'),
           short_info: landmark.get('short_info'),
@@ -48,19 +51,21 @@ export class LandmarksEditComponent implements OnInit {
       return;
     }
 
-    await this.apiService
-      .updateLandmark(this.route.snapshot.paramMap.get('id'), this.form.value)
-      .then(() => {
-        this.toastService.show('Landmark updated successfully', {
-          classname: 'bg-success text-light text-center',
-          delay: 5000,
+    await this.apiService.updateLandmark(
+      this.route.snapshot.paramMap.get('id'),
+      this.form.value
+    );
+  }
+
+  async processFile(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const name = event.target.files[0].name;
+      await this.apiService
+        .uploadImage(this.route.snapshot.paramMap.get('id'), name, file)
+        .then(async () => {
+          await this.getLandmark();
         });
-      })
-      .catch((error) => {
-        this.toastService.show('Something went wrong', {
-          classname: 'bg-danger text-light text-center',
-          delay: 5000,
-        });
-      });
+    }
   }
 }

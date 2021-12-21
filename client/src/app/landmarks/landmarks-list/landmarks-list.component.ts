@@ -20,6 +20,7 @@ export class LandmarksListComponent implements OnInit {
     this.landmarks = await this.apiService.getLandmarks();
     this.landmarks = this.landmarks.map((landmark: any) => ({
       id: landmark.id,
+      photo: landmark.get('photo'),
       photo_thumb: landmark.get('photo_thumb'),
       title: landmark.get('title'),
       short_info: landmark.get('short_info'),

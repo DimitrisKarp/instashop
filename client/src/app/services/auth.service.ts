@@ -26,12 +26,4 @@ export class AuthService {
   get isAuthenticated() {
     return Parse.User.current()?.authenticated();
   }
-
-  handleParseError(err: any) {
-    switch (err.code) {
-      case Parse.Error.INVALID_SESSION_TOKEN:
-        this.logout();
-        break;
-    }
-  }
 }

@@ -6,8 +6,25 @@
           class="card-img"
           [src]="landmark?.photo_thumb?.url()"
           [alt]="landmark?.title"
-          onerror="this.src = 'assets/placeholder.png'"
+          onerror="this.src = 'assets/images/placeholder.png'"
         />
+        <div class="form-group mt-2 text-center">
+          <button
+            type="button"
+            class="btn btn-light upload-button"
+            (click)="imageInput.click()"
+          >
+            <i class="bi bi-cloud-arrow-up-fill"></i>
+            Upload photo
+          </button>
+          <input
+            #imageInput
+            type="file"
+            accept="image/*"
+            (change)="processFile($event)"
+            hidden
+          />
+        </div>
       </div>
       <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7">
         <div class="card-body">
