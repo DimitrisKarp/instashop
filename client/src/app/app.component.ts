@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { AuthService } from './services/auth.service';
 import { DestroyService } from './services/destroy.service';
+import { ToastService } from './services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -16,25 +17,27 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private modal: NgbModal,
-    private destroy$: DestroyService
+    private destroy$: DestroyService,
+    public toastService: ToastService
   ) {}
 
   ngOnInit() {
-    this.currentUser = this.authService.currentUser;
-  }
-
-  openLoginModal() {
-    this.modal
-      .open(LoginModalComponent)
-      .closed.pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.currentUser = this.authService.currentUser;
+    this.authService.currentUser
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((currentUser) => {
+        this.currentUser = currentUser;
       });
   }
 
+  openLoginModal() {
+    this.modal.open(LoginModalComponent);
+  }
+
   logout() {
-    this.authService.logout().then(() => {
-      this.currentUser = this.authService.currentUser;
-    });
+    this.authService.logout();
+  }
+
+  isTemplate(toast: any) {
+    return toast.textOrTpl instanceof TemplateRef;
   }
 }

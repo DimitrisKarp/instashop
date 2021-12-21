@@ -24,4 +24,20 @@ export class ApiService {
       this.authService.handleParseError(error);
     });
   }
+
+  async updateLandmark(id: any, payload: any) {
+    const Landmark = Parse.Object.extend('Landmark');
+    const query = new Parse.Query(Landmark).get(id);
+    query
+      .then((landmark) => {
+        landmark.set('title', payload.title);
+        landmark.set('short_info', payload.short_info);
+        landmark.set('url', payload.url);
+        landmark.set('description', payload.description);
+        return landmark.save();
+      })
+      .catch((error) => {
+        this.authService.handleParseError(error);
+      });
+  }
 }

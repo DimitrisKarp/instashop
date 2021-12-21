@@ -9,8 +9,8 @@
     <i class="bi bi-x-lg"></i>
   </button>
 </div>
-<div class="modal-body">
-  <form #loginForm novalidate [formGroup]="form">
+<form #loginForm novalidate [formGroup]="form">
+  <div class="modal-body">
     <div class="form-group mb-0">
       <div class="input-group has-validation mb-3">
         <div class="input-group-prepend">
@@ -43,13 +43,13 @@
         <div class="invalid-feedback">Please insert password.</div>
       </div>
     </div>
-    <div class="mt-3 text-danger" *ngIf="showError">
+    <div class="mt-3 mb-0 alert alert-danger" *ngIf="showError">
       Wrong username or password!
     </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-primary" (click)="login()">
-    Log in
-  </button>
-</div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" (click)="login()">
+      Log in
+    </button>
+  </div>
+</form>

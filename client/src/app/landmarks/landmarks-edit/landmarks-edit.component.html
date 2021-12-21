@@ -1,0 +1,87 @@
+<form novalidate [formGroup]="form" *ngIf="landmark" (ngSubmit)="submit()">
+  <div class="card shadow-sm p-2">
+    <div class="row">
+      <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
+        <img
+          class="card-img"
+          [src]="landmark?.photo_thumb?.url()"
+          [alt]="landmark?.title"
+          onerror="this.src = 'assets/placeholder.png'"
+        />
+      </div>
+      <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7">
+        <div class="card-body">
+          <div class="d-flex justify-content-between flex-wrap-reverse">
+            <div class="form-group mb-3">
+              <label for="title"><strong>Title</strong></label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="Title"
+                formControlName="title"
+              />
+            </div>
+            <div
+              class="d-flex justify-content-end align-items-start card-buttons"
+            >
+              <button
+                class="btn btn-success mr-2"
+                type="submit"
+                [disabled]="!form.valid"
+              >
+                Save
+              </button>
+              <a
+                [routerLink]="['/landmarks', landmark?.id]"
+                class="btn btn-danger"
+              >
+                Cancel
+              </a>
+            </div>
+          </div>
+          <div class="form-group m-0">
+            <label for="short_info"><strong>Short Info</strong></label>
+            <textarea
+              class="form-control"
+              id="short_info"
+              placeholder="Short info"
+              formControlName="short_info"
+              rows="5"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="card shadow-sm mt-3"
+    *ngIf="landmark?.url || landmark?.description"
+  >
+    <div class="card-body">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="bi bi-globe"></i></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Website URL"
+          aria-label="Website URL"
+          formControlName="url"
+          required
+        />
+      </div>
+      <div class="form-group m-0">
+        <label for="description"><strong>Description</strong></label>
+        <textarea
+          class="form-control"
+          id="description"
+          placeholder="Description"
+          formControlName="description"
+          rows="20"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</form>

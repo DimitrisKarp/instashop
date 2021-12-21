@@ -11,10 +11,25 @@
       </div>
       <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7">
         <div class="card-body">
-          <h3 class="card-title">
-            {{ landmark?.title }}
-          </h3>
-          <p class="card-text">
+          <div
+            class="card-title d-flex justify-content-between flex-wrap-reverse"
+          >
+            <h3>{{ landmark?.title }}</h3>
+            <a
+              [routerLink]="['/landmarks/edit', landmark?.id]"
+              class="
+                d-flex
+                justify-content-end
+                align-items-start
+                card-buttons
+                h3
+              "
+              *appAcl
+            >
+              <i class="bi bi-pencil-square"></i>
+            </a>
+          </div>
+          <p class="card-text text-justify">
             {{ landmark?.short_info }}
           </p>
         </div>
@@ -32,7 +47,7 @@
           landmark?.url
         }}</a>
       </p>
-      <p class="card-text">
+      <p class="card-text text-justify formatted-text">
         {{ landmark?.description }}
       </p>
     </div>
