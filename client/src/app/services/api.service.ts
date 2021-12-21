@@ -1,23 +1,27 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 import * as Parse from 'parse';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   async getLandmarks() {
     const Landmark = Parse.Object.extend('Landmark');
     const query = new Parse.Query(Landmark);
     query.ascending('order');
-    return of(await query.find());
+    return await query.find().catch((error) => {
+      this.authService.handleParseError(error);
+    });
   }
 
   async getLandmark(id: any) {
     const Landmark = Parse.Object.extend('Landmark');
     const query = new Parse.Query(Landmark).get(id);
-    return of(await query);
+    return await query.catch((error) => {
+      this.authService.handleParseError(error);
+    });
   }
 }

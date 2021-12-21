@@ -7,6 +7,19 @@
       class="d-inline-block align-bottom"
     />
   </a>
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="openLoginModal()"
+    *ngIf="!currentUser; else logoutButton"
+  >
+    Log in
+  </button>
+  <ng-template #logoutButton>
+    <button type="button" class="btn btn-outline-danger" (click)="logout()">
+      Log out
+    </button>
+  </ng-template>
 </nav>
 <section class="content-container">
   <router-outlet></router-outlet>

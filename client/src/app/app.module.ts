@@ -7,10 +7,19 @@ import { AppComponent } from './app.component';
 import * as Parse from 'parse';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { LoginModalComponent } from './login-modal/login-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgbModule],
+  declarations: [AppComponent, NotFoundComponent, LoginModalComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

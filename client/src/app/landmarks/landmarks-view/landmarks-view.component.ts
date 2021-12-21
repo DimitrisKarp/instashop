@@ -19,17 +19,16 @@ export class LandmarksViewComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    (await this.apiService.getLandmark(this.route.snapshot.paramMap.get('id')))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((landmark) => {
-        this.landmark = {
-          id: landmark.id,
-          photo_thumb: landmark.get('photo_thumb'),
-          title: landmark.get('title'),
-          short_info: landmark.get('short_info'),
-          url: landmark.get('url'),
-          description: landmark.get('description'),
-        };
-      });
+    this.landmark = await this.apiService.getLandmark(
+      this.route.snapshot.paramMap.get('id')
+    );
+    this.landmark = {
+      id: this.landmark.id,
+      photo_thumb: this.landmark.get('photo_thumb'),
+      title: this.landmark.get('title'),
+      short_info: this.landmark.get('short_info'),
+      url: this.landmark.get('url'),
+      description: this.landmark.get('description'),
+    };
   }
 }
