@@ -7,6 +7,7 @@
           [src]="landmark?.photo_thumb?.url()"
           [alt]="landmark?.title"
           onerror="this.src = 'assets/images/placeholder.png'"
+          (click)="openImageModal(landmark?.photo?.url(), landmark?.title)"
         />
       </div>
       <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7">

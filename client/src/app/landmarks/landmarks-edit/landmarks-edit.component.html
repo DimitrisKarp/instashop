@@ -7,6 +7,7 @@
           [src]="landmark?.photo_thumb?.url()"
           [alt]="landmark?.title"
           onerror="this.src = 'assets/images/placeholder.png'"
+          (click)="openImageModal(landmark?.photo?.url(), landmark?.title)"
         />
         <div class="form-group mt-2 text-center">
           <button
@@ -96,7 +97,7 @@
           id="description"
           placeholder="Description"
           formControlName="description"
-          rows="20"
+          rows="15"
         ></textarea>
       </div>
     </div>

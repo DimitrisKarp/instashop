@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntil } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImageModalComponent } from 'src/app/image-modal/image-modal.component';
 import { ApiService } from 'src/app/services/api.service';
-import { DestroyService } from 'src/app/services/destroy.service';
 
 @Component({
   selector: 'app-landmarks-view',
@@ -15,7 +15,7 @@ export class LandmarksViewComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private readonly destroy$: DestroyService
+    private modal: NgbModal
   ) {}
 
   async ngOnInit() {
@@ -24,11 +24,20 @@ export class LandmarksViewComponent implements OnInit {
     );
     this.landmark = {
       id: this.landmark.id,
+      photo: this.landmark.get('photo'),
       photo_thumb: this.landmark.get('photo_thumb'),
       title: this.landmark.get('title'),
       short_info: this.landmark.get('short_info'),
       url: this.landmark.get('url'),
       description: this.landmark.get('description'),
     };
+  }
+
+  openImageModal(url: string, title: string) {
+    const modalRef = this.modal.open(ImageModalComponent, {
+      modalDialogClass: 'image-modal',
+    });
+    modalRef.componentInstance.photoUrl = url;
+    modalRef.componentInstance.photoTitle = title;
   }
 }

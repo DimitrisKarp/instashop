@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImageModalComponent } from 'src/app/image-modal/image-modal.component';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -15,7 +17,8 @@ export class LandmarksEditComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modal: NgbModal
   ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
@@ -67,5 +70,13 @@ export class LandmarksEditComponent implements OnInit {
           await this.getLandmark();
         });
     }
+  }
+
+  openImageModal(url: string, title: string) {
+    const modalRef = this.modal.open(ImageModalComponent, {
+      modalDialogClass: 'image-modal',
+    });
+    modalRef.componentInstance.photoUrl = url;
+    modalRef.componentInstance.photoTitle = title;
   }
 }

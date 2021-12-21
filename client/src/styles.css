@@ -2,3 +2,32 @@ a,
 a:hover {
   text-decoration: none;
 }
+
+.card {
+  background-color: #ffffffeb;
+  border-radius: 45px;
+}
+
+.card-img {
+  border-radius: 40px;
+  cursor: zoom-in;
+}
+
+.card-buttons {
+  flex: 1 1 auto;
+}
+
+.image-modal {
+  max-width: 90%;
+  width: max-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  margin: 0;
+}
+
+.image-modal img {
+  max-height: 80vh;
+  width: auto;
+  max-width: 100%;
+}
